@@ -9,9 +9,9 @@ import SalchiLuna.config.MySQL;
 public class Modelo {
     private int numeroAtributo =0;
 
-    protected String TABLA;
-    protected String ID;
-    protected String[] COLUMNAS;
+    public String TABLA;
+    public String ID;
+    public String[] COLUMNAS;
 
     private HashMap<Integer,Entrada> atributosValores = new HashMap<>();
 
@@ -98,10 +98,9 @@ public class Modelo {
         return "SELECT "+getAtributos(2)+" FROM "+TABLA;
     }
 
-    public ArrayList<HashMap<String,String>> todo(){
-        
+    public ArrayList<HashMap<String,String>> obtener(String condicion){
         ArrayList<HashMap<String,String>> salida = new ArrayList<>();
-        String query = getQuerySelect();
+        String query = getQuerySelect()+condicion;
         MySQL sql = new MySQL();
         try {
             PreparedStatement consula = sql.getConexion().prepareStatement(query);
@@ -120,8 +119,13 @@ public class Modelo {
         return null;
     }
 
-    public ArrayList<HashMap<String,String>> where(){
-        return null;
+    public ArrayList<HashMap<String,String>> todo(){
+        ArrayList<HashMap<String,String>> respuesta = obtener("");
+        return respuesta;
     }
 
+    public ArrayList<HashMap<String,String>> where(Condicion condiciones){
+        String entrada =  " where "+condiciones.toString();
+        return obtener(entrada);
+    }
 }
