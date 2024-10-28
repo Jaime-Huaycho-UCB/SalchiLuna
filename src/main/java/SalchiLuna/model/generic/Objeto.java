@@ -1,6 +1,6 @@
 package SalchiLuna.model.generic;
 
-public class Entrada {
+public class Objeto {
     private String tipo;
     private String atributo;
     private Object valor;
@@ -15,7 +15,7 @@ public class Entrada {
         return tipo;
     }
 
-    public Entrada(String atributo,Object valor){
+    public Objeto(String atributo,Object valor){
         this.atributo=atributo;
         this.valor=valor;
         if (valor instanceof Integer){
@@ -24,6 +24,15 @@ public class Entrada {
             this.tipo="String";
         }else if (valor instanceof Double){
             this.tipo="Double";
+        }
+    }
+
+    @Override
+    public String toString(){
+        if (valor instanceof String){
+            return atributo+" = "+"\""+valor+"\"";
+        }else{
+            return atributo+" = "+valor;
         }
     }
 }

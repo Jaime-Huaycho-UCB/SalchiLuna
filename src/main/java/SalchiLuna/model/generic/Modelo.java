@@ -13,13 +13,12 @@ public class Modelo {
     public String ID;
     public String[] COLUMNAS;
 
-    private HashMap<Integer,Entrada> atributosValores = new HashMap<>();
+    private HashMap<Integer,Objeto> atributosValores = new HashMap<>();
 
     private String getAtributos(int opcion){
         String salida ="";
-        
         if (opcion==1){
-            Entrada entrada=null;
+            Objeto entrada=null;
             for(int i=0;i<numeroAtributo;i++){
                 entrada = atributosValores.get(i+1);
                 if (i==(numeroAtributo-1)){
@@ -61,7 +60,7 @@ public class Modelo {
     public void guardar(){
             String query = getQueryInsertar();
             MySQL sql = new MySQL();
-            Entrada entrada= null;
+            Objeto entrada= null;
             try {
                 PreparedStatement consulta = sql.getConexion().prepareStatement(query);
                 for (int i=0;i<atributosValores.size();i++){
@@ -91,24 +90,24 @@ public class Modelo {
 
     public void agregarParametros(String atributo,Object valor){
         numeroAtributo+=1;
-        atributosValores.put(numeroAtributo, new Entrada(atributo, valor));
+        atributosValores.put(numeroAtributo, new Objeto(atributo, valor));
     }
 
     private String getQuerySelect(){
         return "SELECT "+getAtributos(2)+" FROM "+TABLA;
     }
 
-    public ArrayList<HashMap<String,String>> obtener(String condicion){
-        ArrayList<HashMap<String,String>> salida = new ArrayList<>();
+    public ArrayList<Tupla> obtener(String condicion){
+        ArrayList<Tupla> salida = new ArrayList<>();
         String query = getQuerySelect()+condicion;
         MySQL sql = new MySQL();
         try {
             PreparedStatement consula = sql.getConexion().prepareStatement(query);
             ResultSet resultado = consula.executeQuery();
             while (resultado.next()) {
-                HashMap<String,String> tupla = new HashMap<>();
+                Tupla tupla = new Tupla();
                 for(int i=0;i<COLUMNAS.length;i++){
-                    tupla.put(COLUMNAS[i], resultado.getString(COLUMNAS[i]));
+                    tupla.agregarObjeto(COLUMNAS[i], resultado.getString(COLUMNAS[i]));
                 }
                 salida.add(tupla);
             }
@@ -119,13 +118,56 @@ public class Modelo {
         return null;
     }
 
-    public ArrayList<HashMap<String,String>> todo(){
-        ArrayList<HashMap<String,String>> respuesta = obtener("");
+    public ArrayList<Tupla> todo(){
+        ArrayList<Tupla> respuesta = obtener("");
         return respuesta;
     }
 
-    public ArrayList<HashMap<String,String>> where(Condicion condiciones){
+    public ArrayList<Tupla> where(Condicion condiciones){
         String entrada =  " where "+condiciones.toString();
         return obtener(entrada);
+    }
+    public Tupla whereOne(Condicion condiciones){
+        String entrada =  " where "+condiciones.toString();
+        return obtener(entrada).get(0);
+    }
+
+    public Tupla update(Tupla actualizacion,Condicion condiciones){
+        Tupla salida = new Tupla();
+        String condicion = " WHERE "+condiciones.toString();
+        String query = "UPDATE "+TABLA+" SET "+actualizacion.toString()+condicion;
+        MySQL sql = new MySQL();
+        try {
+            PreparedStatement consulta = sql.getConexion().prepareStatement(query);
+            int respuesta = consulta.executeUpdate();
+            if (respuesta>0){
+                salida.agregarObjeto("respuesta", respuesta);
+            }else{
+                salida.agregarObjeto("respuesta", "No se actualizo nada");
+            }
+            return salida;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public Tupla delete(Condicion condiciones){
+        Tupla salida = new Tupla();
+        String query = "DELETE FROM "+TABLA+" WHERE "+condiciones.toString();
+        MySQL sql = new MySQL();
+        try {
+            PreparedStatement consulta = sql.getConexion().prepareStatement(query);
+            int respuesta = consulta.executeUpdate();
+            if (respuesta>0){
+                salida.agregarObjeto("respuesta", "Se eliminaro "+respuesta+" registros");
+            }else{
+                salida.agregarObjeto("respuesta", "No se elimino nada");
+            }
+            return salida;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }
