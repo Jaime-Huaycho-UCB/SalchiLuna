@@ -81,7 +81,7 @@ public class Modelo {
                 }
                 int resultado = consulta.executeUpdate();
                 if (resultado>0){
-                    System.out.println("Se ingreso exitosamente a la base de datos");
+                    // System.out.println("Se ingreso exitosamente a la base de datos");
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -111,6 +111,9 @@ public class Modelo {
                 }
                 salida.add(tupla);
             }
+            if (salida.size()==0){
+                return null;
+            }
             return salida;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -128,8 +131,13 @@ public class Modelo {
         return obtener(entrada);
     }
     public Tupla whereOne(Condicion condiciones){
-        String entrada =  " where "+condiciones.toString();
-        return obtener(entrada).get(0);
+        String entrada = " where "+condiciones.toString();
+        ArrayList<Tupla> salida = obtener(entrada);
+        if (salida==null){
+            return null;
+        }else{
+            return salida.get(0);
+        }
     }
 
     public Tupla update(Tupla actualizacion,Condicion condiciones){

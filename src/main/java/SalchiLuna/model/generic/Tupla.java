@@ -21,6 +21,26 @@ public class Tupla {
     public Objeto getObjeto(String atributo){
         return getTupla().get(atributo);
     }
+    public Boolean getObjetoBoolean(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        if (objeto.getValor().toString().equals("true")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public Integer getObjetoInt(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        return (int) objeto.getValor();
+    }
+    public String getObjetoString(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        return objeto.getValor().toString();
+    }
+    public Double getObjetoDouble(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        return (Double) objeto.getValor();
+    }
 
     public void agregarObjeto(String atributo,Object valor){
         Objeto objeto = new Objeto(atributo, valor);

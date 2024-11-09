@@ -93,4 +93,12 @@ public class Libreria {
         return ((seleccion>=0) ? (opciones[seleccion]) : "");
     }
     // Fin - Funciones botones
+
+    public int random(int a, int b){
+        return (int)(Math.random() * (b - a + 1)) + a;
+    }
+
+    public int obtenerId(){
+        return random(100000000, 999999999);
+    }
 }
