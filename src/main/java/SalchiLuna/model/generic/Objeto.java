@@ -24,6 +24,8 @@ public class Objeto {
             this.tipo="String";
         }else if (valor instanceof Double){
             this.tipo="Double";
+        }else if (valor instanceof Boolean){
+            this.tipo="Boolean";
         }
     }
 

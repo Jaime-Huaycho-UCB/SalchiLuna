@@ -1,5 +1,8 @@
 package SalchiLuna.Librerias;
 
+import java.time.LocalDate;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Libreria {
@@ -100,5 +103,15 @@ public class Libreria {
 
     public int obtenerId(){
         return random(100000000, 999999999);
+    }
+
+    public String fechaActual(){
+        LocalDate fechaActual = LocalDate.now();
+        return fechaActual.toString();
+    }
+
+    public void abrirPantalla(JFrame pantalla){
+        pantalla.setLocationRelativeTo(null);
+        pantalla.setVisible(true);
     }
 }

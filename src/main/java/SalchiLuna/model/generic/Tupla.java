@@ -1,6 +1,7 @@
 package SalchiLuna.model.generic;
+import java.util.ArrayList;
 import java.util.HashMap;
-
+// import java.util.ArrayList;
 
 public class Tupla {
     private HashMap<String,Objeto> tupla = new HashMap<>();
@@ -29,9 +30,9 @@ public class Tupla {
             return false;
         }
     }
-    public Integer getObjetoInt(String atributo){
+    public int getObjetoInt(String atributo){
         Objeto objeto = getObjeto(atributo);
-        return (int) objeto.getValor();
+        return Integer.parseInt(objeto.getValor().toString());
     }
     public String getObjetoString(String atributo){
         Objeto objeto = getObjeto(atributo);
@@ -39,7 +40,13 @@ public class Tupla {
     }
     public Double getObjetoDouble(String atributo){
         Objeto objeto = getObjeto(atributo);
-        return (Double) objeto.getValor();
+        return Double.parseDouble(objeto.getValor().toString());
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> ArrayList<T> getObjetoArrayTupla(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        return (ArrayList<T>) objeto.getValor();
     }
 
     public void agregarObjeto(String atributo,Object valor){
