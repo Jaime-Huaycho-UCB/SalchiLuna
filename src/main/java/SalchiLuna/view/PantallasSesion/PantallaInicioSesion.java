@@ -7,12 +7,17 @@ import javax.swing.border.EmptyBorder;
 import SalchiLuna.Librerias.Libreria;
 import SalchiLuna.controller.database.UsuarioController;
 import SalchiLuna.model.generic.Tupla;
+import SalchiLuna.view.PantallasDeRedirecion.PantallaInicio;
+import SalchiLuna.view.PantallasUsuarioAdmin.PantallaMenuAdmin;
+import SalchiLuna.view.PantallasUsuarioCliente.PantallaMenuCliente;
 import SalchiLuna.view.constants.DimencionesPantalla;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class PantallaInicioSesion extends JFrame implements DimencionesPantalla{
 
@@ -33,21 +38,21 @@ public class PantallaInicioSesion extends JFrame implements DimencionesPantalla{
 		contentPane.setLayout(null);
 		
 		JLabel lb1 = new JLabel("Correo");
-		lb1.setBounds(108, 181, 82, 16);
+		lb1.setBounds(55, 130, 82, 16);
 		contentPane.add(lb1);
 		
 		JLabel lb2 = new JLabel("Contrasena");
-		lb2.setBounds(108, 231, 82, 16);
+		lb2.setBounds(55, 180, 82, 16);
 		contentPane.add(lb2);
 		
 		EntradaCorreo = new JTextField();
-		EntradaCorreo.setBounds(202, 176, 160, 26);
+		EntradaCorreo.setBounds(149, 125, 160, 26);
 		contentPane.add(EntradaCorreo);
 		EntradaCorreo.setColumns(10);
 		
 		EntradaContrasena = new JTextField();
 		EntradaContrasena.setColumns(10);
-		EntradaContrasena.setBounds(202, 226, 160, 26);
+		EntradaContrasena.setBounds(149, 175, 160, 26);
 		contentPane.add(EntradaContrasena);
 		
 		JButton BotonIniciar = new JButton("Iniciar sesion");
@@ -56,16 +61,40 @@ public class PantallaInicioSesion extends JFrame implements DimencionesPantalla{
 				IniciarSesion(EntradaCorreo.getText(),EntradaContrasena.getText());
 			}
 		});
-		BotonIniciar.setBounds(190, 286, 117, 29);
+		BotonIniciar.setBounds(133, 237, 117, 29);
 		contentPane.add(BotonIniciar);
+		
+		JButton BotonVolver = new JButton("Volver");
+		BotonVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lib.abrirPantalla(new PantallaInicio());
+				dispose();
+			}
+		});
+		BotonVolver.setBounds(6, 6, 117, 29);
+		contentPane.add(BotonVolver);
+		
+		JLabel lblNewLabel = new JLabel("Inicio de sesion");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(6, 47, 368, 55);
+		contentPane.add(lblNewLabel);
 	}
 
 	public void IniciarSesion(String correo,String contrasena){
 		UsuarioController usuarioController = new UsuarioController();
 		Tupla salida = usuarioController.IniciarSesion(correo, contrasena);
-		if (salida.getObjetoInt("salida")==1){
+		if (salida.getObjetoBoolean("salida")){
 			lib.MostrarConfirmacion(salida.getObjetoString("mensaje"));
-			lib.MostrarConfirmacion(salida.getObjetoInt("idUsuario"));
+			if (salida.getObjetoInt("tipo")==0){
+				PantallaMenuCliente pantallaMenuCliente = new PantallaMenuCliente(salida.getObjetoInt("idUsuario"));
+				lib.abrirPantalla(pantallaMenuCliente);
+				dispose();
+			}else{
+				PantallaMenuAdmin pantallaMenuAdmin = new PantallaMenuAdmin();
+				lib.abrirPantalla(pantallaMenuAdmin);
+				dispose();
+			}
 		}else{
 			lib.MostrarError(salida.getObjetoString("mensaje"));
 		}

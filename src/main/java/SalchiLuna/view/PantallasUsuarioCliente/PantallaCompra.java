@@ -16,6 +16,9 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class PantallaCompra extends JFrame implements DimencionesPantalla{
 
@@ -45,7 +48,7 @@ public class PantallaCompra extends JFrame implements DimencionesPantalla{
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(38, 124, 391, 248);
+		scrollPane.setBounds(33, 170, 391, 202);
 		contentPane.add(scrollPane);
 		
 		Menu menu = new Menu();
@@ -54,7 +57,7 @@ public class PantallaCompra extends JFrame implements DimencionesPantalla{
 		scrollPane.setViewportView(TablaMenu);
 		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(483, 124, 372, 248);
+		scrollPane_1.setBounds(478, 170, 391, 202);
 		contentPane.add(scrollPane_1);
 
 		
@@ -68,7 +71,7 @@ public class PantallaCompra extends JFrame implements DimencionesPantalla{
 				AccionAgregarCarrito();
 			}
 		});
-		AgregarCarrito.setBounds(162, 398, 166, 29);
+		AgregarCarrito.setBounds(149, 384, 166, 29);
 		contentPane.add(AgregarCarrito);
 		
 		JButton EliminarCarrito = new JButton("Eliminar de carrito");
@@ -77,7 +80,7 @@ public class PantallaCompra extends JFrame implements DimencionesPantalla{
 				AccionEliminarProducto();
 			}
 		});
-		EliminarCarrito.setBounds(638, 398, 166, 29);
+		EliminarCarrito.setBounds(593, 384, 166, 29);
 		contentPane.add(EliminarCarrito);
 		
 		JButton RealizarCompra = new JButton("Realizar compra");
@@ -86,8 +89,36 @@ public class PantallaCompra extends JFrame implements DimencionesPantalla{
 				realizarCompra();
 			}
 		});
-		RealizarCompra.setBounds(403, 398, 150, 29);
+		RealizarCompra.setBounds(376, 384, 150, 29);
 		contentPane.add(RealizarCompra);
+		
+		JButton BotonVolver = new JButton("Volver");
+		BotonVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lib.abrirPantalla(new PantallaMenuCliente(idUsuario));
+				dispose();
+			}
+		});
+		BotonVolver.setBounds(6, 6, 117, 29);
+		contentPane.add(BotonVolver);
+		
+		JLabel lblNewLabel = new JLabel("Realizar compras");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		lblNewLabel.setBounds(6, 47, 888, 65);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Menu");
+		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(33, 124, 391, 34);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Carrito de compras");
+		lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setBounds(478, 124, 391, 34);
+		contentPane.add(lblNewLabel_1_1);
 	}
 
 	public void AccionAgregarCarrito(){

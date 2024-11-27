@@ -12,6 +12,9 @@ import SalchiLuna.view.constants.DimencionesPantalla;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class PantallaInicio extends JFrame implements DimencionesPantalla{
 	private Libreria lib = new Libreria();
@@ -36,7 +39,7 @@ public class PantallaInicio extends JFrame implements DimencionesPantalla{
 				dispose();
 			}
 		});
-		BotonIniciarSesion.setBounds(123, 154, 154, 29);
+		BotonIniciarSesion.setBounds(77, 117, 154, 29);
 		contentPane.add(BotonIniciarSesion);
 		
 		JButton BotonRegistrarse = new JButton("Registrarse");
@@ -47,7 +50,7 @@ public class PantallaInicio extends JFrame implements DimencionesPantalla{
 				dispose();
 			}
 		});
-		BotonRegistrarse.setBounds(123, 232, 154, 29);
+		BotonRegistrarse.setBounds(77, 190, 154, 29);
 		contentPane.add(BotonRegistrarse);
 		
 		JButton BotonCerrarPrograma = new JButton("Cerrar programa");
@@ -58,8 +61,13 @@ public class PantallaInicio extends JFrame implements DimencionesPantalla{
 				dispose();
 			}
 		});
-		BotonCerrarPrograma.setBounds(123, 300, 154, 29);
+		BotonCerrarPrograma.setBounds(77, 264, 154, 29);
 		contentPane.add(BotonCerrarPrograma);
+		
+		JLabel lblNewLabel = new JLabel("Menu de inicio");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(6, 50, 288, 55);
+		contentPane.add(lblNewLabel);
 	}
-
 }

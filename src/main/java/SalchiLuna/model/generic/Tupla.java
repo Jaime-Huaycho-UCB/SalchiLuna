@@ -42,6 +42,10 @@ public class Tupla {
         Objeto objeto = getObjeto(atributo);
         return Double.parseDouble(objeto.getValor().toString());
     }
+    public Object[][] getObjetoMatriz(String atributo){
+        Objeto objeto = getObjeto(atributo);
+        return (Object[][]) objeto.getValor();
+    }
 
     @SuppressWarnings("unchecked")
     public <T> ArrayList<T> getObjetoArrayTupla(String atributo){

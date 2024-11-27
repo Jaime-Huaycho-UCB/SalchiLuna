@@ -14,7 +14,7 @@ public class UsuarioController {
             Tupla usuario = existeUsuario(correo);
 
             if (usuario==null){
-                salida.agregarObjeto("salida", 0);
+                salida.agregarObjeto("salida", false);
                 salida.agregarObjeto("mensaje", "El usuario ingresado no esta registrado");
                 return salida;
             }
@@ -25,14 +25,14 @@ public class UsuarioController {
                 return salida;
             }
 
-            salida.agregarObjeto("salida", 1);
+            salida.agregarObjeto("salida", true);
             salida.agregarObjeto("mensaje", "Se inicio sesion exitosamente");
             salida.agregarObjeto("idUsuario",Integer.parseInt(usuario.getObjetoString("id")));
             salida.agregarObjeto("tipo", Integer.parseInt(usuario.getObjetoString("tipo")));
             return salida;
         } catch (Exception e){
             e.printStackTrace();
-            salida.agregarObjeto("salida", 0);
+            salida.agregarObjeto("salida", false);
             salida.agregarObjeto("mensaje", "Error: "+e.getMessage());
             return salida;
         }
